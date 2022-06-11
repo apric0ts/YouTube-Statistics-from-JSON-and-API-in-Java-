@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class linkTester {
     public static void main(String[] args) throws InterruptedException {
         String ytLink = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=";
-        String apiKey = "AIzaSyC1xfopW7werwQQa0qOP-C-JJv7VJ5YLG0"; //youtube API key (please do not share this, it is private :) )
+        String apiKey = ""; //youtube API key (please do not share this, it is private :) ), if the API key is not here, this code won't work
         int vidNum = 0;
         int vidNum2 = 0; //these "vidNum" variables are for making sure that there are different files for each JSON file per vid.
         //ask user for input
@@ -72,7 +72,7 @@ public class linkTester {
 
             DownloadWebPage(searchLink,vidNum);
             Thread.sleep(2000);
-            String jsonFile = "C:/Users/Shane/IdeaProjects/CSA Project/videos"+vidNum+".json"; //turns the JSON file into String
+            String jsonFile = "/Users/apric/IdeaProjects/CSA Project/videos"+vidNum+".json"; //turns the JSON file into String
 
             try {
 
@@ -97,7 +97,7 @@ public class linkTester {
 
 
 
-                links.add(new Link (idString)); //adds the link to the ArrayList which will be referenced in the yes/no and the statisticslink creator
+                links.add(new Link (idString,titleString)); //adds the link to the ArrayList which will be referenced in the yes/no and the statisticslink creator
 
                 //next we have to add each ytID into the statistics link thing
                 //this should give all json files for each individual video
@@ -112,7 +112,7 @@ public class linkTester {
                 DownloadWebPage2(statisticsLink,vidNum2);
                 Thread.sleep(2000);
 
-                String jsonFileForStats = "/Users/Shane/IdeaProjects/CSA Project/videos"+vidNum2+"stats.json"; //turns the JSON file into String
+                String jsonFileForStats = "/Users/apric/IdeaProjects/CSA Project/videos"+vidNum2+"stats.json"; //turns the JSON file into String
                 String contents2 = new String((Files.readAllBytes(Paths.get(jsonFileForStats)))); //reads the file
                 JSONObject jsonObjectForStats = new JSONObject(contents2); //creates object with the json file
                 JSONArray itemsArrayForStats = jsonObjectForStats.getJSONArray("items"); //creates items array
@@ -127,7 +127,7 @@ public class linkTester {
                 int views = Integer.parseInt(getViews(statistics));
                 int comments = Integer.parseInt(getComments(statistics));
 
-                videos.add(new Video(likes, views, comments, idString));
+                videos.add(new Video(likes, views, comments, idString, titleString));
 
 
                 System.out.println("\n\nThe title of the video we found is: " + titleString); //prints title
@@ -159,17 +159,21 @@ public class linkTester {
                 vidNum++;
                 vidNum2++;
 
-            /*
-            for (int i=0; i<links.size(); i++) {
-                //System.out.println("ID #"+i+": " + links.get(i).getVideoID());
-            }
-             */
+
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
 
+
+
+
+        }
+        //WHILE LOOP ENDS, DISPLAYING ALL VIDEOS NOW:
+        System.out.println("\n\nFinal Playlist: " + vidNum + " videos in the playlist.");
+        for (int i = 0; i<videos.size();i++) {
+            System.out.println(videos.get(i).toString() +"\n");
+        }
 
 
 
