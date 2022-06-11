@@ -19,7 +19,7 @@ public class Playlist {
     //prints playlist
     public void printPlaylist() {
         for (int i = 0; i<list.size(); i++) {
-            System.out.println("Video " + i + ": " + list.get(i).getVideoTitle());
+            //System.out.println("Video " + i + ": " + list.get(i).getVideoTitle());
             System.out.println("Date Added " + i + ": " + list.get(i).getDateAdded());
             System.out.println("View Count " + i + ": " + list.get(i).getViewCount());
             System.out.println("Like Count: " + list.get(i).getLikeCount());

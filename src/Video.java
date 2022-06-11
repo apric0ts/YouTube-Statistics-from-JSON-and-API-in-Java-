@@ -17,9 +17,7 @@ public class Video extends Link {
     //getters
 
     //returns video title
-    public String getVideoTitle() {
-        return super.getVideoTitle();
-    }
+
 
     //returns view count
     public int getViewCount() {
