@@ -6,9 +6,8 @@ public class Video extends Link {
     private int likeCount;
 
     //constructor
-    public Video (String date, int views, int comments, int likes) {
-        super();
-        dateAdded = date;
+    public Video (int likes, int views, int comments, String link) {
+        super(link);
         viewCount = views;
         commentCount = comments;
         likeCount = likes;
@@ -37,5 +36,13 @@ public class Video extends Link {
     //returns comment count
     public int getCommentCount() {
         return commentCount;
+    }
+
+    public String toString() {
+        String s = "";
+        s += "  * View Count: " + getViewCount();
+        s += "\n  * Like Count: " + getLikeCount();
+        s += "\n  * Comment Count: " + getCommentCount();
+        return s;
     }
 }
