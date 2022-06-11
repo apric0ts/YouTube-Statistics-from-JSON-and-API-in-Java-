@@ -40,6 +40,7 @@ public class linkTester {
         //ask user for input
         boolean cont = true; //this changes when the user says "no" to adding more videos to playlist.
         ArrayList<Link> links = new ArrayList<Link>(); //holds the links for all the videos in the playlist
+        ArrayList<Video> videos = new ArrayList<Video>(); //holds the videos for all the videos in the playlist
 
         while (cont) {
             Scanner input = new Scanner(System.in);
@@ -71,7 +72,7 @@ public class linkTester {
 
             DownloadWebPage(searchLink,vidNum);
             Thread.sleep(2000);
-            String jsonFile = "/Users/apric/IdeaProjects/CSA Project/videos"+vidNum+".json"; //turns the JSON file into String
+            String jsonFile = "C:/Users/Shane/IdeaProjects/CSA Project/videos"+vidNum+".json"; //turns the JSON file into String
 
             try {
 
@@ -88,6 +89,10 @@ public class linkTester {
                 Object title = idObject.get("snippet"); //object id is created
                 String titleString = title.toString();
                 titleString = getTitle(titleString);
+                for(int i = 0; i < titleString.length()-5; i++){
+                    if(titleString.substring(i,i+5).equalsIgnoreCase("&quot"))
+                        titleString= (titleString.substring(0,i)+titleString.substring(i+6));
+                }
                 //title printing is farther down
 
 
@@ -100,13 +105,14 @@ public class linkTester {
 
                 String statisticsLink = "https://youtube.googleapis.com/youtube/v3/videos?part=statistics&id="+links.get(vidNum2).getVideoID()+"&key="+apiKey; //creates link with statistics
                 System.out.println("This is the link for the JSON file where we pull statistics from: " + statisticsLink);
+
                 //gives JSON file with statistics for videos
 
                 //downloads as file
                 DownloadWebPage2(statisticsLink,vidNum2);
                 Thread.sleep(2000);
 
-                String jsonFileForStats = "/Users/apric/IdeaProjects/CSA Project/videos"+vidNum2+"stats.json"; //turns the JSON file into String
+                String jsonFileForStats = "/Users/Shane/IdeaProjects/CSA Project/videos"+vidNum2+"stats.json"; //turns the JSON file into String
                 String contents2 = new String((Files.readAllBytes(Paths.get(jsonFileForStats)))); //reads the file
                 JSONObject jsonObjectForStats = new JSONObject(contents2); //creates object with the json file
                 JSONArray itemsArrayForStats = jsonObjectForStats.getJSONArray("items"); //creates items array
@@ -117,8 +123,15 @@ public class linkTester {
 
                 ////display the video that is found by searching
                 String statistics = stats.toString();
+                int likes = Integer.parseInt(getLikes(statistics));
+                int views = Integer.parseInt(getViews(statistics));
+                int comments = Integer.parseInt(getComments(statistics));
+
+                videos.add(new Video(likes, views, comments, idString));
+
+
                 System.out.println("\n\nThe title of the video we found is: " + titleString); //prints title
-                System.out.println("Here are some statistics on this video: " + statistics); //prints statistics
+                System.out.println("Here are some statistics on this video: \n" + videos.get(vidNum).toString()); //prints statistics
 
 
                 //ask the user if they would like to add this video to the playlist
@@ -174,11 +187,9 @@ public class linkTester {
 
     public static String getTitle(String old) { //extracts title from the title object
         String newS = "";
-        int j = 0;
         for (int i =0; i<old.length()-8; i++) {
             if((old.substring(i,i+5)).equals("title")) {
                 newS = old.substring(i+8);
-                j=i+7;
             }
         }
 
@@ -189,8 +200,42 @@ public class linkTester {
             }
         }
         return newS;
-
-
+    }
+    public static String getLikes(String old){
+        String newS = "";
+        for(int i = 0; i < old.length(); i++){
+            if(old.charAt(i) == 'v'){
+                newS = old.substring(14,i-3);
+                break;
+            }
+        }
+        return newS;
+    }
+    public static String getViews(String old){
+        int firstIndex = 0;
+        int lastIndex = 0;
+        for(int i = 0; i < old.length(); i++){
+            if(old.charAt(i) == 'v'){
+                firstIndex = i+12;
+                break;
+            }
+        }
+        for(int i = 0; i < old.length(); i++){
+            if(old.charAt(i) == 'f'){
+                lastIndex = i-3;
+                break;
+            }
+        }
+        return old.substring(firstIndex,lastIndex);
+    }
+    public static String getComments(String old){
+        String newS = "";
+        for(int i = 0; i < old.length(); i++){
+            if(old.charAt(i) == 't'){
+                newS = old.substring(i+4,old.length()-2);
+            }
+        }
+        return newS;
     }
 
 
