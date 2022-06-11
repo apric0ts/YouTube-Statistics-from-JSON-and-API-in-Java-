@@ -27,6 +27,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 //scanner and arraylist (normal java stuff)
+import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -47,7 +48,7 @@ public class linkTester {
             }
         }
         System.out.print("This is the link for the JSON file where we see the search results: ");
-        String searchLink = ytLink + searchQuery + "&key=" + apiKey;
+        String searchLink = ytLink + searchQuery + "&key=" + apiKey; //takes to page with video ID
         System.out.println(searchLink); //generates the API link with the search query
 
         //----------------------------------------------------------------------------------------------
@@ -68,11 +69,13 @@ public class linkTester {
             JSONArray itemsArray = jsonObject.getJSONArray("items"); //creates items array
             JSONObject idObject = itemsArray.getJSONObject(0); //creates idObject from id array
             Object id = idObject.get("id"); //object id is created
+            Object channelTitle = idObject.get("snippet"); //object id is created
 
             System.out.println(itemsArray.getJSONObject(0).toString());
             String idString = id.toString();
             idString = getVidId(idString); //static method at the bottom of this class in order to cut the videoId out of the toString object
             System.out.println(idString);
+            System.out.println(channelTitle);
 
 
 
@@ -95,9 +98,19 @@ public class linkTester {
             //next we have to add each ytID into the statistics link thing
             //this should give all json files for each individual video
             for (int i = 0; i < links.size(); i++) {
-                System.out.printf("This is the link for the JSON file where we pull statistics from: " +
-                        "https://youtube.googleapis.com/youtube/v3/videos?part=statistics&id=%s&key=%s", links.get(i).getVideoID(), apiKey);
+                String statisticsLink = "https://youtube.googleapis.com/youtube/v3/videos?part=statistics&id="+links.get(i).getVideoID()+"&key="+apiKey; //creates link with statistics
+                System.out.printf("This is the link for the JSON file where we pull statistics from: " + statisticsLink);
                 //gives JSON file for individual videos
+
+                //downloads as file
+                DownloadWebPage2(statisticsLink,vidNum);
+                Thread.sleep(2000);
+                String jsonFileForStats = "/Users/apric/IdeaProjects/CSA Project/videos"+i+".json"; //turns the JSON file into String
+
+
+
+
+
             }
 
 
@@ -117,7 +130,44 @@ public class linkTester {
         return newS.substring(0,newS.length()-2);
     }
 
+
+    //download webpage for searching
     public static void DownloadWebPage(String webpage, int vNum)
+    {
+        try {
+
+            // Create URL object
+            URL url = new URL(webpage);
+            BufferedReader readr =
+                    new BufferedReader(new InputStreamReader(url.openStream()));
+
+            // Enter filename in which you want to download
+            BufferedWriter writer =
+                    new BufferedWriter(new FileWriter("videos"+vNum+".json"));
+
+            // read each line from stream till end
+            String line;
+            while ((line = readr.readLine()) != null) {
+                writer.write(line);
+            }
+
+            readr.close();
+            writer.close();
+            System.out.println("Successfully Downloaded.");
+        }
+
+        // Exceptions
+        catch (MalformedURLException mue) {
+            System.out.println("Malformed URL Exception raised");
+        }
+        catch (IOException ie) {
+            System.out.println("IOException raised");
+        }
+    }
+
+
+    //downloading webpages for individual statistics
+    public static void DownloadWebPage2(String webpage, int vNum)
     {
         try {
 
