@@ -72,7 +72,7 @@ public class linkTester {
 
             DownloadWebPage(searchLink,vidNum);
             Thread.sleep(2000);
-            String jsonFile = "/Users/apric/IdeaProjects/CSA Project/videos"+vidNum+".json"; //turns the JSON file into String
+            String jsonFile = "/Users/apric/IdeaProjects/CSA Project/videos.json"; //turns the JSON file into String
 
             try {
 
@@ -112,7 +112,7 @@ public class linkTester {
                 DownloadWebPage2(statisticsLink,vidNum2);
                 Thread.sleep(2000);
 
-                String jsonFileForStats = "/Users/apric/IdeaProjects/CSA Project/videos"+vidNum2+"stats.json"; //turns the JSON file into String
+                String jsonFileForStats = "/Users/apric/IdeaProjects/CSA Project/videostats.json"; //turns the JSON file into String
                 String contents2 = new String((Files.readAllBytes(Paths.get(jsonFileForStats)))); //reads the file
                 JSONObject jsonObjectForStats = new JSONObject(contents2); //creates object with the json file
                 JSONArray itemsArrayForStats = jsonObjectForStats.getJSONArray("items"); //creates items array
