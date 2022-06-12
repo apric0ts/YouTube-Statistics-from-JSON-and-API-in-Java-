@@ -3,14 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="84e193d8-59cc-4dff-96bb-bdf3d030cf9a" name="Changes" comment="hi">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Link.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Link.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Video.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Video.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Playlist.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/linkTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/linkTester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/videos0.json" beforeDir="false" afterPath="$PROJECT_DIR$/videos0.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/videos0stats.json" beforeDir="false" afterPath="$PROJECT_DIR$/videos0stats.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/videos1.json" beforeDir="false" afterPath="$PROJECT_DIR$/videos1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/videos1stats.json" beforeDir="false" afterPath="$PROJECT_DIR$/videos1stats.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/videos2.json" beforeDir="false" afterPath="$PROJECT_DIR$/videos2.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,17 +32,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Users/apric/Downloads/jsoup-1.15.1.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "D:/Users/apric/Downloads/jsoup-1.15.1.jar",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "MavenSettings"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\apric\IdeaProjects\CSA Project\src" />

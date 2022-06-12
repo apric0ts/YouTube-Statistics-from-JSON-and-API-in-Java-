@@ -4,7 +4,6 @@ Date: 6/3/22
 Assignment: Independent Study Project
 Description: Pulling from YouTube API
 API KEY: AIzaSyC1xfopW7werwQQa0qOP-C-JJv7VJ5YLG0
-Random Stuff:
 */
 
 
@@ -34,7 +33,7 @@ import java.util.ArrayList;
 public class linkTester {
     public static void main(String[] args) throws InterruptedException {
         String ytLink = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=";
-        String apiKey = ""; //youtube API key (please do not share this, it is private :) ), if the API key is not here, this code won't work
+        String apiKey = "AIzaSyD8woH2yRTuoTb9QIQhkEAuHIFaaZiuszM"; //youtube API key (please do not share this, it is private :) ), if the API key is not here, this code won't work
         int vidNum = 0;
         int vidNum2 = 0; //these "vidNum" variables are for making sure that there are different files for each JSON file per vid.
         //ask user for input
@@ -42,9 +41,10 @@ public class linkTester {
         ArrayList<Link> links = new ArrayList<Link>(); //holds the links for all the videos in the playlist
         ArrayList<Video> videos = new ArrayList<Video>(); //holds the videos for all the videos in the playlist
 
+        System.out.println("\nWelcome to the YouTube Java searcher.");
         while (cont) {
             Scanner input = new Scanner(System.in);
-            System.out.println("\nWelcome to the YouTube Java searcher.");
+
             System.out.print("Enter a search term: ");
             String searchQuery = input.nextLine();
             System.out.println("\n");
