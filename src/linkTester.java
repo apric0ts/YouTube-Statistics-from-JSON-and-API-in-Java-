@@ -26,7 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 //scanner and arraylist (normal java stuff)
-import java.sql.SQLOutput;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -70,9 +70,9 @@ public class linkTester {
 
             //take the JSON file and get the video IDs
 
-            DownloadWebPage(searchLink,vidNum);
+            DownloadWebPage(searchLink);
             Thread.sleep(2000);
-            String jsonFile = "/Users/apric/IdeaProjects/CSA Project/videos.json"; //turns the JSON file into String
+            String jsonFile = "/Users/Shane/IdeaProjects/CSA Project/videos.json"; //turns the JSON file into String
 
             try {
 
@@ -93,6 +93,10 @@ public class linkTester {
                     if(titleString.substring(i,i+5).equalsIgnoreCase("&quot"))
                         titleString= (titleString.substring(0,i)+titleString.substring(i+6));
                 }
+                for(int i = 0; i < titleString.length()-5; i++){
+                    if(titleString.substring(i,i+5).equalsIgnoreCase("&#39;"))
+                        titleString= (titleString.substring(0,i+1)+"'"+titleString.substring(i+6));
+                }
                 //title printing is farther down
 
 
@@ -109,10 +113,9 @@ public class linkTester {
                 //gives JSON file with statistics for videos
 
                 //downloads as file
-                DownloadWebPage2(statisticsLink,vidNum2);
-                Thread.sleep(2000);
+                DownloadWebPage2(statisticsLink);
 
-                String jsonFileForStats = "/Users/apric/IdeaProjects/CSA Project/videostats.json"; //turns the JSON file into String
+                String jsonFileForStats = "/Users/Shane/IdeaProjects/CSA Project/videostats.json"; //turns the JSON file into String
                 String contents2 = new String((Files.readAllBytes(Paths.get(jsonFileForStats)))); //reads the file
                 JSONObject jsonObjectForStats = new JSONObject(contents2); //creates object with the json file
                 JSONArray itemsArrayForStats = jsonObjectForStats.getJSONArray("items"); //creates items array
@@ -135,17 +138,20 @@ public class linkTester {
 
 
                 //ask the user if they would like to add this video to the playlist
-                System.out.print("\n\nWould you like to add this song to the playlist? (yes/no): ");
+                System.out.print("\n\nWould you like to add this video to the database? (yes/no): ");
                 String accept = input.nextLine();
 
                 if(accept.equals("yes".toLowerCase())) {
                     //add this to the links
                 } else if (accept.equals("no".toLowerCase())){
                     links.remove(links.size()-1);
+                    videos.remove(videos.size()-1);
+                    vidNum--;
+                    vidNum2--;
                 }
 
                 //asks the user if they would like to add more videos
-                System.out.print("\n\nWould you like to add more songs to the playlist? (yes/no): ");
+                System.out.print("\n\nSearch for more videos? (yes/no): ");
                 String contAsk = input.nextLine();
                 if (contAsk.equals("yes".toLowerCase())) {
                     cont = true;
@@ -170,9 +176,51 @@ public class linkTester {
 
         }
         //WHILE LOOP ENDS, DISPLAYING ALL VIDEOS NOW:
-        System.out.println("\n\nFinal Playlist: " + vidNum + " videos in the playlist.");
+        System.out.println("\n\nFinal Database: " + vidNum + " videos in the database.");
         for (int i = 0; i<videos.size();i++) {
             System.out.println(videos.get(i).toString() +"\n");
+        }
+
+      //SORT BY KEY STATISTICS
+        System.out.print("\n\n Would you like to order the videos in the database? (yes/no): ");
+       Scanner input = new Scanner(System.in);
+        String userInput = input.nextLine();
+        if(userInput.equalsIgnoreCase("yes")){
+            while(true) {
+                System.out.print("\n Sort by: (Views/Likes/Comments/Exit) ");
+                String sortBy = input.nextLine();
+
+                if (sortBy.equalsIgnoreCase("views")) {
+                    Collections.sort(videos, Video.vidViewComparator);
+
+                    for (int i = 0; i<videos.size();i++) {
+                        System.out.println(videos.get(i).toString() +"\n");
+                    }
+
+                } else if (sortBy.equalsIgnoreCase("likes")) {
+                    Collections.sort(videos, Video.vidLikeComparator);
+
+                    for (int i = 0; i<videos.size();i++) {
+                        System.out.println(videos.get(i).toString() +"\n");
+                    }
+
+                } else if (sortBy.equalsIgnoreCase("comments")) {
+                    Collections.sort(videos, Video.vidCommComparator);
+
+                    for (int i = 0; i<videos.size();i++) {
+                        System.out.println(videos.get(i).toString() +"\n");
+                    }
+
+                } else if (sortBy.equalsIgnoreCase("exit")) {
+                    System.out.println("Alright, have a good day!");
+                    System.exit(0);
+                } else {
+                    System.out.println("Not a valid sorting option, try again");
+                }
+            }
+        }else if(userInput.equalsIgnoreCase("no")){
+            System.out.println("Alright, have a good day!");
+            System.exit(0);
         }
 
 
@@ -244,7 +292,7 @@ public class linkTester {
 
 
     //download webpage for searching
-    public static void DownloadWebPage(String webpage, int vNum)
+    public static void DownloadWebPage(String webpage)
     {
         try {
 
@@ -255,7 +303,7 @@ public class linkTester {
 
             // Enter filename in which you want to download
             BufferedWriter writer =
-                    new BufferedWriter(new FileWriter("videos"+vNum+".json"));
+                    new BufferedWriter(new FileWriter("videos"+".json"));
 
             // read each line from stream till end
             String line;
@@ -279,7 +327,7 @@ public class linkTester {
 
 
     //downloading webpages for individual statistics
-    public static void DownloadWebPage2(String webpage, int vNum)
+    public static void DownloadWebPage2(String webpage)
     {
         try {
 
@@ -290,7 +338,7 @@ public class linkTester {
 
             // Enter filename in which you want to download
             BufferedWriter writer =
-                    new BufferedWriter(new FileWriter("videos"+vNum+"stats.json"));
+                    new BufferedWriter(new FileWriter("video"+"stats.json"));
 
             // read each line from stream till end
             String line;
