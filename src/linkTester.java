@@ -1,3 +1,4 @@
+
 /*
 Names: Austin, Shane, Alec
 Date: 6/3/22
@@ -11,24 +12,24 @@ API KEY: AIzaSyC1xfopW7werwQQa0qOP-C-JJv7VJ5YLG0
 
 
 //JSON intepreter
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONException;
+        import org.json.JSONArray;
+        import org.json.JSONObject;
+        import org.json.JSONException;
 
 //reading off website
-import java.io.*;
-import java.net.URL;
-import java.net.MalformedURLException;
+        import java.io.*;
+        import java.net.URL;
+        import java.net.MalformedURLException;
 
 //accessing files
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+        import java.io.IOException;
+        import java.nio.file.Files;
+        import java.nio.file.Paths;
 
 //scanner and arraylist (normal java stuff)
-import java.util.Collections;
-import java.util.Scanner;
-import java.util.ArrayList;
+        import java.util.Collections;
+        import java.util.Scanner;
+        import java.util.ArrayList;
 
 public class linkTester {
     public static void main(String[] args) throws InterruptedException {
@@ -41,7 +42,7 @@ public class linkTester {
         ArrayList<Link> links = new ArrayList<Link>(); //holds the links for all the videos in the playlist
         ArrayList<Video> videos = new ArrayList<Video>(); //holds the videos for all the videos in the playlist
 
-        System.out.println("\nWelcome to the YouTube Java searcher.");
+        System.out.println("\nWelcome to the Java YouTube Data Analyzer.");
         while (cont) {
             Scanner input = new Scanner(System.in);
 
@@ -72,7 +73,7 @@ public class linkTester {
 
             DownloadWebPage(searchLink);
             Thread.sleep(2000);
-            String jsonFile = "/Users/Shane/IdeaProjects/CSA Project/videos.json"; //turns the JSON file into String
+            String jsonFile = "/Users/apric/IdeaProjects/CSA Project/videos.json"; //turns the JSON file into String
 
             try {
 
@@ -115,7 +116,7 @@ public class linkTester {
                 //downloads as file
                 DownloadWebPage2(statisticsLink);
 
-                String jsonFileForStats = "/Users/Shane/IdeaProjects/CSA Project/videostats.json"; //turns the JSON file into String
+                String jsonFileForStats = "/Users/apric/IdeaProjects/CSA Project/videostats.json"; //turns the JSON file into String
                 String contents2 = new String((Files.readAllBytes(Paths.get(jsonFileForStats)))); //reads the file
                 JSONObject jsonObjectForStats = new JSONObject(contents2); //creates object with the json file
                 JSONArray itemsArrayForStats = jsonObjectForStats.getJSONArray("items"); //creates items array
@@ -126,7 +127,7 @@ public class linkTester {
 
                 ////display the video that is found by searching
                 String statistics = stats.toString();
-                int likes = Integer.parseInt(getLikes(statistics));
+                int likes = Integer.parseInt(getLikes(statistics)); //turns the string numbers into integers
                 int views = Integer.parseInt(getViews(statistics));
                 int comments = Integer.parseInt(getComments(statistics));
 
@@ -181,13 +182,13 @@ public class linkTester {
             System.out.println(videos.get(i).toString() +"\n");
         }
 
-      //SORT BY KEY STATISTICS
-        System.out.print("\n\n Would you like to order the videos in the database? (yes/no): ");
-       Scanner input = new Scanner(System.in);
+        //SORT BY KEY STATISTICS
+        System.out.print("\n\n Would you like to sort the videos in the database? (yes/no): ");
+        Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
         if(userInput.equalsIgnoreCase("yes")){
             while(true) {
-                System.out.print("\n Sort by: (Views/Likes/Comments/Exit) ");
+                System.out.print("Sort by (Views/Likes/Comments/Exit): ");
                 String sortBy = input.nextLine();
 
                 if (sortBy.equalsIgnoreCase("views")) {
@@ -253,7 +254,7 @@ public class linkTester {
         }
         return newS;
     }
-    public static String getLikes(String old){
+    public static String getLikes(String old){ //extracts likes from string
         String newS = "";
         for(int i = 0; i < old.length(); i++){
             if(old.charAt(i) == 'v'){
@@ -263,7 +264,7 @@ public class linkTester {
         }
         return newS;
     }
-    public static String getViews(String old){
+    public static String getViews(String old){ //extracts views from string
         int firstIndex = 0;
         int lastIndex = 0;
         for(int i = 0; i < old.length(); i++){
@@ -280,7 +281,7 @@ public class linkTester {
         }
         return old.substring(firstIndex,lastIndex);
     }
-    public static String getComments(String old){
+    public static String getComments(String old){ //extracts comments from string
         String newS = "";
         for(int i = 0; i < old.length(); i++){
             if(old.charAt(i) == 't'){
@@ -292,7 +293,7 @@ public class linkTester {
 
 
     //download webpage for searching
-    public static void DownloadWebPage(String webpage)
+    public static void DownloadWebPage(String webpage) //downloads webpage into file (search json file)
     {
         try {
 
@@ -327,7 +328,7 @@ public class linkTester {
 
 
     //downloading webpages for individual statistics
-    public static void DownloadWebPage2(String webpage)
+    public static void DownloadWebPage2(String webpage) //downloads webpage into file (statistics json file)
     {
         try {
 
