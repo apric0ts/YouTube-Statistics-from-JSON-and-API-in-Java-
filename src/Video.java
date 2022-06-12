@@ -44,21 +44,21 @@ public class Video extends Link {
         return commentCount;
     }
 
-    public static Comparator<Video> vidViewComparator = new Comparator<Video>() {
+    public static Comparator<Video> vidViewComparator = new Comparator<Video>() { //compares all videos by their views
         @Override
         public int compare(Video o1, Video o2) {
-        int views1 = o1.getViewCount();
-        int views2 = o2.getViewCount();
-        return views2-views1;
-    }};
-    public static Comparator<Video> vidLikeComparator = new Comparator<Video>() {
+            int views1 = o1.getViewCount();
+            int views2 = o2.getViewCount();
+            return views2-views1;
+        }};
+    public static Comparator<Video> vidLikeComparator = new Comparator<Video>() { //compares all videos by their likes
         @Override
         public int compare(Video o1, Video o2) {
             int likes1 = o1.getLikeCount();
             int likes2 = o2.getLikeCount();
             return likes2-likes1;
         }};
-    public static Comparator<Video> vidCommComparator = new Comparator<Video>() {
+    public static Comparator<Video> vidCommComparator = new Comparator<Video>() { //compares all videos by their comment counts
         @Override
         public int compare(Video o1, Video o2) {
             int comms1 = o1.getCommentCount();
