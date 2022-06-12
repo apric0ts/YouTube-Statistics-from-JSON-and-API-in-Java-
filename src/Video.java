@@ -1,3 +1,4 @@
+import java.util.Comparator;
 public class Video extends Link {
 
     private String dateAdded;
@@ -42,6 +43,32 @@ public class Video extends Link {
     public int getCommentCount() {
         return commentCount;
     }
+
+    public static Comparator<Video> vidViewComparator = new Comparator<Video>() {
+        @Override
+        public int compare(Video o1, Video o2) {
+        int views1 = o1.getViewCount();
+        int views2 = o2.getViewCount();
+        return views2-views1;
+    }};
+    public static Comparator<Video> vidLikeComparator = new Comparator<Video>() {
+        @Override
+        public int compare(Video o1, Video o2) {
+            int likes1 = o1.getLikeCount();
+            int likes2 = o2.getLikeCount();
+            return likes2-likes1;
+        }};
+    public static Comparator<Video> vidCommComparator = new Comparator<Video>() {
+        @Override
+        public int compare(Video o1, Video o2) {
+            int comms1 = o1.getCommentCount();
+            int comms2 = o2.getCommentCount();
+            return comms2-comms1;
+        }};
+
+
+
+
 
     public String toString() {
         String s = "Title: " + getTitleString();
