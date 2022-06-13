@@ -34,7 +34,7 @@ API KEY: AIzaSyC1xfopW7werwQQa0qOP-C-JJv7VJ5YLG0
 public class linkTester {
     public static void main(String[] args) throws InterruptedException {
         String ytLink = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=";
-        String apiKey = "AIzaSyD8woH2yRTuoTb9QIQhkEAuHIFaaZiuszM"; //youtube API key (please do not share this, it is private :) ), if the API key is not here, this code won't work
+        String apiKey = ""; //youtube API key (please do not share this, it is private :) ), if the API key is not here, this code won't work
         int vidNum = 0;
         int vidNum2 = 0; //these "vidNum" variables are for making sure that there are different files for each JSON file per vid.
         //ask user for input
