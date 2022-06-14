@@ -34,7 +34,7 @@ API KEY: AIzaSyC1xfopW7werwQQa0qOP-C-JJv7VJ5YLG0
 public class linkTester {
     public static void main(String[] args) throws InterruptedException {
         String ytLink = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=";
-        String apiKey = ""; //youtube API key (please do not share this, it is private :) ), if the API key is not here, this code won't work
+        String apiKey = "AIzaSyD8woH2yRTuoTb9QIQhkEAuHIFaaZiuszM"; //youtube API key (please do not share this, it is private :) ), if the API key is not here, this code won't work
         int vidNum = 0;
         int vidNum2 = 0; //these "vidNum" variables are for making sure that there are different files for each JSON file per vid.
         //ask user for input
@@ -73,7 +73,7 @@ public class linkTester {
 
             DownloadWebPage(searchLink);
             Thread.sleep(2000);
-            String jsonFile = "/Users/apric/IdeaProjects/CSA Project/videos.json"; //turns the JSON file into String
+            String jsonFile = "/Users/darkg/IdeaProjects/CSA Project/videos.json"; //turns the JSON file into String
 
             try {
 
@@ -116,7 +116,7 @@ public class linkTester {
                 //downloads as file
                 DownloadWebPage2(statisticsLink);
 
-                String jsonFileForStats = "/Users/apric/IdeaProjects/CSA Project/videostats.json"; //turns the JSON file into String
+                String jsonFileForStats = "/Users/darkg/IdeaProjects/CSA Project/videostats.json"; //turns the JSON file into String
                 String contents2 = new String((Files.readAllBytes(Paths.get(jsonFileForStats)))); //reads the file
                 JSONObject jsonObjectForStats = new JSONObject(contents2); //creates object with the json file
                 JSONArray itemsArrayForStats = jsonObjectForStats.getJSONArray("items"); //creates items array
@@ -134,8 +134,8 @@ public class linkTester {
                 videos.add(new Video(likes, views, comments, idString, titleString));
 
 
-                System.out.println("\n\nThe title of the video we found is: " + titleString); //prints title
-                System.out.println("Here are some statistics on this video: \n" + videos.get(vidNum).toString()); //prints statistics
+               // System.out.println("\n\nThe title of the video we found is: " + titleString); //prints title
+                System.out.println("\n\nHere are some statistics on this video: \n" + videos.get(vidNum).toString()); //prints statistics
 
 
                 //ask the user if they would like to add this video to the playlist
@@ -152,7 +152,7 @@ public class linkTester {
                 }
 
                 //asks the user if they would like to add more videos
-                System.out.print("\n\nSearch for more videos? (yes/no): ");
+                System.out.print("\nSearch for more videos? (yes/no): ");
                 String contAsk = input.nextLine();
                 if (contAsk.equals("yes".toLowerCase())) {
                     cont = true;
@@ -162,7 +162,7 @@ public class linkTester {
 
 
                 //changes the vid numbers, this should be at the end of the program
-                System.out.println("There are " + (links.size()) + " videos in the playlist currently.");
+                System.out.println("There are " + (links.size()) + " videos in the database currently.\n");
                 vidNum++;
                 vidNum2++;
 
@@ -177,13 +177,13 @@ public class linkTester {
 
         }
         //WHILE LOOP ENDS, DISPLAYING ALL VIDEOS NOW:
-        System.out.println("\n\nFinal Database: " + vidNum + " videos in the database.");
+        System.out.println("\n\nFinal Database: " + vidNum + " videos in the database.\n");
         for (int i = 0; i<videos.size();i++) {
             System.out.println(videos.get(i).toString() +"\n");
         }
 
         //SORT BY KEY STATISTICS
-        System.out.print("\n\n Would you like to sort the videos in the database? (yes/no): ");
+        System.out.print("\nWould you like to sort the videos in the database? (yes/no): ");
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
         if(userInput.equalsIgnoreCase("yes")){
@@ -193,22 +193,25 @@ public class linkTester {
 
                 if (sortBy.equalsIgnoreCase("views")) {
                     Collections.sort(videos, Video.vidViewComparator);
-
+                    System.out.print("\n");
                     for (int i = 0; i<videos.size();i++) {
+                        System.out.println("#" + (i+1) + " views:" );
                         System.out.println(videos.get(i).toString() +"\n");
                     }
 
                 } else if (sortBy.equalsIgnoreCase("likes")) {
                     Collections.sort(videos, Video.vidLikeComparator);
-
+                    System.out.print("\n");
                     for (int i = 0; i<videos.size();i++) {
+                        System.out.println("#" + (i+1) + " likes:" );
                         System.out.println(videos.get(i).toString() +"\n");
                     }
 
                 } else if (sortBy.equalsIgnoreCase("comments")) {
                     Collections.sort(videos, Video.vidCommComparator);
-
+                    System.out.print("\n");
                     for (int i = 0; i<videos.size();i++) {
+                        System.out.println("#" + (i+1) + " comments:" );
                         System.out.println(videos.get(i).toString() +"\n");
                     }
 
