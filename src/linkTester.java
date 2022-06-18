@@ -70,7 +70,7 @@ public class linkTester {
                 //take the JSON file and get the video IDs
 
                 DownloadWebPage(searchLink);
-                Thread.sleep(2000);
+                Thread.sleep(500);
                 String jsonFile = "/Users/darkg/IdeaProjects/CSA Project/videos.json"; //turns the JSON file into String
 
                 try {
@@ -90,7 +90,7 @@ public class linkTester {
                     titleString = getTitle(titleString);
                     for (int i = 0; i < titleString.length() - 5; i++) {
                         if (titleString.substring(i, i + 5).equalsIgnoreCase("&quot"))
-                            titleString = (titleString.substring(0, i) + titleString.substring(i + 6));
+                            titleString = (titleString.substring(0, i) + "\"" + titleString.substring(i + 6));
                     }
                     for (int i = 0; i < titleString.length() - 5; i++) {
                         if (titleString.substring(i, i + 5).equalsIgnoreCase("&amp;"))
