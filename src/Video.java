@@ -1,4 +1,5 @@
 import java.util.Comparator;
+import java.text.DecimalFormat;
 public class Video extends Link {
 
     private String dateAdded;
@@ -72,9 +73,10 @@ public class Video extends Link {
 
     public String toString() {
         String s = "Title: " + getTitleString();
-        s += "\n  * View Count: " + getViewCount();
-        s += "\n  * Like Count: " + getLikeCount();
-        s += "\n  * Comment Count: " + getCommentCount();
+        DecimalFormat viewFormat = new DecimalFormat("#,###");
+        s += "\n  * View Count: " + viewFormat.format(getViewCount());
+        s += "\n  * Like Count: " + viewFormat.format(getLikeCount());
+        s += "\n  * Comment Count: " + viewFormat.format(getCommentCount());
         s += "\n  * Link: https://youtu.be/"+ getVideoID();
         return s;
     }
