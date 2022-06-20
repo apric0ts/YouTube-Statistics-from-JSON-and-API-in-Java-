@@ -41,6 +41,8 @@ public class linkTester {
         boolean cont = true; //this changes when the user says "no" to adding more videos to playlist.
         ArrayList<Link> links = new ArrayList<Link>(); //holds the links for all the videos in the playlist
         ArrayList<Video> videos = new ArrayList<Video>(); //holds the videos for all the videos in the playlist
+        boolean badVid = false;
+        int indexFound = 0;
 
         System.out.println("\nWelcome to the Java YouTube Data Analyzer.");
         while(true) {
@@ -70,7 +72,7 @@ public class linkTester {
                 //take the JSON file and get the video IDs
 
                 DownloadWebPage(searchLink);
-                Thread.sleep(500);
+                Thread.sleep(250);
                 String jsonFile = "/Users/darkg/IdeaProjects/CSA Project/videos.json"; //turns the JSON file into String
 
                 try {
@@ -83,8 +85,11 @@ public class linkTester {
 
                     Object id = idObject.get("id"); //object id is created
                     String idString = id.toString();
-                    idString = getVidId(idString); //static method at the bottom of this class in order to cut the videoId out of the toString object
-
+                    if(getVidId(idString)==null){
+                        continue;
+                    }else if(getVidId(idString)!=null){
+                        idString = getVidId(idString); //static method at the bottom of this class in order to cut the videoId out of the toString object
+                    }
                     Object title = idObject.get("snippet"); //object id is created
                     String titleString = title.toString();
                     titleString = getTitle(titleString);
@@ -127,11 +132,31 @@ public class linkTester {
 
                     ////display the video that is found by searching
                     String statistics = stats.toString();
-                    int likes = Integer.parseInt(getLikes(statistics)); //turns the string numbers into integers
-                    int views = Integer.parseInt(getViews(statistics));
-                    int comments = Integer.parseInt(getComments(statistics));
 
-                    videos.add(new Video(likes, views, comments, idString, titleString));
+
+                    int likes = Integer.parseInt(getLikes(statistics)); //turns the string numbers into integers
+                    int comments = Integer.parseInt(getComments(statistics));
+                       try{
+                           int views = Integer.parseInt(getViews(statistics));
+                           videos.add(new Video(likes, views, comments, idString, titleString));
+                       }
+                       catch(Exception e){
+                           if(badVid){
+                               int views = Integer.parseInt(getViews(statistics));
+                               videos.add(new Video(likes, views, comments, idString, titleString));
+                           }else{
+                               System.out.println("\n(!!!) Sorry, that video has too many views [Over 2 billion!], try a smaller one!\n");
+                               videos.add(new Video(0,0,0,"","ignore me :)"));
+                               indexFound = vidNum;
+                               vidNum++;
+                               vidNum2++;
+                               badVid = true;
+                               continue;
+                           }
+
+                       }
+
+
 
 
                     // System.out.println("\n\nThe title of the video we found is: " + titleString); //prints title
@@ -159,6 +184,10 @@ public class linkTester {
                     } else if(contAsk.equals("no".toLowerCase())){
 
                         cont = false;
+                        if(badVid) {
+                            videos.remove(indexFound);
+                            vidNum--;
+                        }
                     }
                     else{
                         System.out.println("Not a valid answer, try again");
@@ -249,12 +278,17 @@ public class linkTester {
     }
     public static String getVidId(String old) { //extracts vidID from the ID object
         String newS = "";
+        boolean foundVidId = false;
         for (int i =0; i<old.length()-8; i++) {
             if((old.substring(i,i+7)).equals("videoId")) {
                 newS = old.substring(i+10);
+                foundVidId = true;
             }
+        }if(foundVidId){
+            return newS.substring(0,newS.length()-2);
         }
-        return newS.substring(0,newS.length()-2);
+        System.out.println("\n(!!!) The first result on YouTube was a channel, try to narrow down your search.\n");
+        return null;
     }
 
     public static String getTitle(String old) { //extracts title from the title object
